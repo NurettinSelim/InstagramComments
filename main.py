@@ -1,6 +1,6 @@
 from instagram_private_api import Client
-
 import secrets
+from utils import get_media_id
 
 username = secrets.username
 password = secrets.password
@@ -8,17 +8,13 @@ password = secrets.password
 # Firstly run save_cookie.py
 api = Client(username, password, cookie=open("cookie.file", mode="rb").read())
 
-"""
-The post is: https://www.instagram.com/p/CGSpEUOlixC/
-Its media_id is =2419176566355799106_1067259270,
-Find in this link
-https://api.instagram.com/oembed/?callback=&url=https://www.instagram.com/p/CGSpEUOlixC/
-"""
+post_url = "https://www.instagram.com/p/CGSpEUOlixC/"
+media_id = get_media_id(post_url)
+print(media_id)
 
-media = api.media_n_comments("2419176566355799106_1067259270", n=3000)
-comment_list = list()
+comments = api.media_n_comments(media_id, n=3000)
 
-for i in media:
+for i in comments:
     print(f"Username:{i['user']['username']} \n{i['text']}\n--------------------------")
 
-print(len(media))
+print(f"Comments count:{len(comments)}")
