@@ -1,1 +1,2 @@
 instagram-private-api==1.6.0
+requests
